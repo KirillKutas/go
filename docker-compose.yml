@@ -1,0 +1,28 @@
+version: '3.4'
+
+services:
+    db:
+        image: mcr.microsoft.com/mssql/server:2017-latest-ubuntu
+        environment:
+            ACCEPT_EULA: "Y"
+            SA_PASSWORD: "admin11@"
+            MSSQL_PID: "Express"
+        ports:
+            - "1434:1433" 
+
+    onlinegameshop:
+        image: ${DOCKER_REGISTRY-}onlinegameshop
+        build:
+            context: .
+            dockerfile: Dockerfile
+        depends_on:
+            - db
+        ports:
+            - "8000:80"
+            - "8001:443"
+        environment:
+            DbServer: "db"
+            DbPort: "1433"
+            DbUser: "sa"
+            DbPassword: "admin11@"
+            Database: "onlinegameshop"
