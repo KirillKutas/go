@@ -56,7 +56,6 @@ export class ProductCreate extends React.Component {
             } else {
                 throw 'error';
             }
-            
         }
         catch (e) {
             console.log('error');
